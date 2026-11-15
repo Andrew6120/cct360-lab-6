@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Pokemon Generator</title>
+</head>
+<body>
+
+    <h1>Random Pokemon Generator</h1>
+    <h2>First generation</h2>
+
+
+
+
+
+
+
+
+
+
+    <button onclick="generatePokemon()">Generate</button>
+
+    <h2 id="name"></h2>
+    <img id="picture" width="200">
+
+    <p id="type"></p>
+    <p id="hp"></p>
+    <p id="attack"></p>
+    <p id="defense"></p>
+    <p id="speed"></p>
+
+
+
+
+
+
+
+
+
+
+    <script>
+        async function generatePokemon() {
+
+          //random number 0-1, * 151 because 151 pokemon in first gen. +1 because java starts counting at 0
+            let number = Math.floor(Math.random() * 151) + 1;
+
+
+
+        //POKIAPI
+            let response = await fetch(
+                "https://pokeapi.co/api/v2/pokemon/" + number //example: random number = 25 (pikachu) = ...api/v2/pokemon/25
+            );
+
+            let pokemon = await response.json();
+
+           
+
+
+
+
+
+            document.getElementById("name").innerText = pokemon.name;
+
+            document.getElementById("picture").src =
+                pokemon.sprites.other["official-artwork"].front_default; //image src is set to the pokemon image URL from the API
+
+            document.getElementById("type").innerText =
+                "Type: " + pokemon.types.map(t => t.type.name).join(", ");
+
+            document.getElementById("hp").innerText =
+                "HP: " + pokemon.stats[0].base_stat;
+
+            document.getElementById("attack").innerText =
+                "Attack: " + pokemon.stats[1].base_stat;
+
+            document.getElementById("defense").innerText =
+                "Defense: " + pokemon.stats[2].base_stat;
+
+            document.getElementById("speed").innerText =
+                "Speed: " + pokemon.stats[5].base_stat;
+        }
+    </script>
+
+
+
+
+
+</body>
+</html>
